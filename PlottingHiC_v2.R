@@ -5,7 +5,11 @@ rm(list = ls())
 graphics.off()
 
 ## Load packages
-#BiocManager::install("plotgardener")
+# if (!require("BiocManager", quietly = TRUE))
+#   install.packages("BiocManager")
+# BiocManager::install(version = "3.16")
+# BiocManager::install("plotgardener")
+# install.packages("strawr")
 library("plotgardener")
 library(RColorBrewer)
 
@@ -89,18 +93,18 @@ for (c in 1:noc) {
                   50000,
                   "observed")
   
-  svg(paste(
-    "C:/Users/JiaYing/Group Project/HiCPlot/hicplot_chr", c, ".svg"), # File name
-    width = 50,
-    height = 50,
-    #units = "in", # required for .bmp and .png
-    #res = 100, # required for .bmp and .png
+  png(paste(
+    "C:/Users/JiaYing/Group Project/HiCPlot/hicplot_chr", c, ".png", sep=""), # File name
+    width = 5,
+    height = 5,
+    units = "in", # required for .bmp and .png
+    res = 100, # required for .bmp and .png
     bg = "white" # Background color
   )         
   
   pageCreate(
-    width = 50,
-    height = 50,
+    width = 5,
+    height = 5,
     default.units = "inches",
     showGuides = FALSE,
     xgrid = 0,
@@ -113,28 +117,28 @@ for (c in 1:noc) {
     chromend = sum(sum_bp[1:c + 1]),
     x = 0,
     y = 0,
-    width = 50,
-    height = 50,
+    width = 5,
+    height = 5,
     default.units = "inches",
     palette = colorRampPalette(brewer.pal(n = 9, "Reds")),
     colorTrans = "log10"
   )
-  annoGenomeLabel(
-    plot = hicPlot,
-    scale = "bp",
-    x = 0,
-    y = 50
-  )
+  # annoGenomeLabel(
+  #   plot = hicPlot,
+  #   scale = "bp",
+  #   x = 0,
+  #   y = 50
+  # )
   
   #chr_bp
   #sum_chr
   newx = 0
-  newy = 50
+  newy = 5
   for (i in 1:length(chr_bp)) {
-    x = chr_bp[i] * (50 / sum_chr)
-    y = chr_bp[i] * (50 / sum_chr)
-    width = chr_bp[i] * (50 / sum_chr)
-    height = -chr_bp[i] * (50 / sum_chr)
+    x = chr_bp[i] * (5 / sum_chr)
+    y = chr_bp[i] * (5 / sum_chr)
+    width = chr_bp[i] * (5 / sum_chr)
+    height = -chr_bp[i] * (5 / sum_chr)
     plotRect(
       x = newx,
       y = newy,
@@ -142,7 +146,7 @@ for (c in 1:noc) {
       height = height,
       just = c("left", "top"),
       default.units = "inches",
-      lwd = 4,
+      lwd = 2,
       fill = NA
     )
     newx = newx + x
