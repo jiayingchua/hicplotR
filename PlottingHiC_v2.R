@@ -18,6 +18,13 @@ hiCFile <-
   "C://Users//JiaYing//Group Project//Ridaeus_Ras1_scaffolds_yahs_JBAT.hic"
 assemblyfile <-
   "C://Users//JiaYing//Group Project//Ridaeus_Ras1_scaffolds_yahs_JBAT.curated4.assembly"
+assemblyfile <- 
+  "C://Users//JiaYing//Group Project//Ridaeus_Ras1_v1.0//Ridaeus_Ras1_scaffolds_yahs_JBAT.assembly"
+
+# Specify output folder
+output_folder <- "C://Users//JiaYing//Group Project//HiC_images"
+dir.create(output_folder)
+
 
 # number of chromosomes (noc)
 noc <- 7
@@ -96,8 +103,7 @@ for (c in 1:noc) {
                   reso,
                   "observed")
   
-  png(paste(
-    "C:/Users/JiaYing/Group Project/HiCPlot/hicplot_chr", c, ".png", sep=""), # File name
+  png(paste(output_folder,"/hicplot_chr", c, ".png", sep=""), # File name
     width = width,
     height = height,
     units = "in", # required for .bmp and .png
@@ -140,16 +146,16 @@ for (c in 1:noc) {
   for (i in 1:length(chr_bp)) {
     x = chr_bp[i] * (width / sum_chr)
     y = chr_bp[i] * (height / sum_chr)
-    width = chr_bp[i] * (width / sum_chr)
-    height = -chr_bp[i] * (height / sum_chr)
+    x_width = chr_bp[i] * (width / sum_chr)
+    y_height = -chr_bp[i] * (height / sum_chr)
     plotRect(
       x = newx,
       y = newy,
-      width = width,
-      height = height,
+      width = x_width,
+      height = y_height,
       just = c("left", "top"),
       default.units = "inches",
-      lwd = 2,
+      lwd = 1,
       fill = NA
     )
     newx = newx + x
