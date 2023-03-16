@@ -26,6 +26,9 @@ noc <- 7
 
 chromname <- strawr::readHicChroms(hiCFile)
 bpreso <- strawr::readHicBpResolutions(hiCFile)
+reso <- 50000 #resolution (user input)
+width <- 5 #inches
+height <- 5 #inches
 
 ######### Convert assembly file into appropriate lists/vectors #########
 
@@ -90,21 +93,21 @@ for (c in 1:noc) {
                   "assembly",
                   "assembly",
                   "BP",
-                  50000,
+                  reso,
                   "observed")
   
   png(paste(
     "C:/Users/JiaYing/Group Project/HiCPlot/hicplot_chr", c, ".png", sep=""), # File name
-    width = 5,
-    height = 5,
+    width = width,
+    height = height,
     units = "in", # required for .bmp and .png
     res = 100, # required for .bmp and .png
     bg = "white" # Background color
   )         
   
   pageCreate(
-    width = 5,
-    height = 5,
+    width = width,
+    height = height,
     default.units = "inches",
     showGuides = FALSE,
     xgrid = 0,
@@ -117,8 +120,8 @@ for (c in 1:noc) {
     chromend = sum(sum_bp[1:c + 1]),
     x = 0,
     y = 0,
-    width = 5,
-    height = 5,
+    width = width,
+    height = height,
     default.units = "inches",
     palette = colorRampPalette(brewer.pal(n = 9, "Reds")),
     colorTrans = "log10"
@@ -127,18 +130,18 @@ for (c in 1:noc) {
   #   plot = hicPlot,
   #   scale = "bp",
   #   x = 0,
-  #   y = 50
+  #   y = height
   # )
   
   #chr_bp
   #sum_chr
   newx = 0
-  newy = 5
+  newy = height
   for (i in 1:length(chr_bp)) {
-    x = chr_bp[i] * (5 / sum_chr)
-    y = chr_bp[i] * (5 / sum_chr)
-    width = chr_bp[i] * (5 / sum_chr)
-    height = -chr_bp[i] * (5 / sum_chr)
+    x = chr_bp[i] * (width / sum_chr)
+    y = chr_bp[i] * (height / sum_chr)
+    width = chr_bp[i] * (width / sum_chr)
+    height = -chr_bp[i] * (height / sum_chr)
     plotRect(
       x = newx,
       y = newy,
