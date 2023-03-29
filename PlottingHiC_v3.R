@@ -12,29 +12,37 @@ args = commandArgs(trailingOnly = TRUE)
 # argument 5 = number of chromosomes
 hiCFile <- args[1]
 assemblyfile <- args[2]
-output_folder <- args[3]
+outputfile <- args[3]
 reso <- as.numeric(args[4])
 noc <- as.numeric(args[5])
 
 
 ## Load packages
-# if (!require("BiocManager", quietly = TRUE))
-#   install.packages("BiocManager")
+if (!require("BiocManager", quietly = TRUE)){
+install.packages("BiocManager")}
+
 # BiocManager::install(version = "3.16")
-# BiocManager::install("plotgardener")
-# install.packages("strawr")
-# library("plotgardener")
-# library(RColorBrewer)
+
+if (!require("plotgardener", quietly = TRUE)){
+BiocManager::install("plotgardener")}
+
+if (!require("strawr", quietly = TRUE)){
+install.packages("strawr")}
+
+
+library(strawr)
+library(plotgardener)
+library(RColorBrewer)
 
 # List of packages for session
-.packages = c("plotgardener", "RColorBrewer")
-
-# Install CRAN packages (if not already installed)
-.inst <- .packages %in% installed.packages()
-if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
-
-# Load packages into session 
-lapply(.packages, require, character.only=TRUE)
+# .packages = c("plotgardener", "RColorBrewer")
+# 
+# # Install CRAN packages (if not already installed)
+# .inst <- .packages %in% installed.packages()
+# if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
+# 
+# # Load packages into session 
+# lapply(.packages, require, character.only=TRUE)
 
 ## Load files
 # hiCFile <-
@@ -46,7 +54,7 @@ lapply(.packages, require, character.only=TRUE)
 
 # Specify output folder
 # output_folder <- "C://Users//JiaYing//Group Project//HiC_images"
-dir.create(output_folder)
+# dir.create(output_folder)
 
 
 # number of chromosomes (noc)
@@ -126,7 +134,7 @@ for (c in 1:noc) {
                   reso,
                   "observed")
   
-  png(paste(output_folder,"/hicplot_chr", c, ".png", sep=""), # File name
+  png(paste(outputfile, "_hicplot_chr", c, ".png", sep=""), # File name
     width = width,
     height = height,
     units = "in", # required for .bmp and .png
@@ -178,7 +186,7 @@ for (c in 1:noc) {
       height = y_height,
       just = c("left", "top"),
       default.units = "inches",
-      lwd = 1,
+      lwd = 2,
       fill = NA
     )
     newx = newx + x
